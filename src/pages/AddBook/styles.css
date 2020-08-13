@@ -1,0 +1,36 @@
+#logon{
+    margin-top: 150px;
+    text-align: center;
+}
+
+#logon input+input{
+    margin-top: 30px;
+}
+
+#logon button{
+    background: skyblue;
+}
+
+.content {
+    margin-top: 50px;
+}
+
+.container {
+    text-align: center;
+}
+
+header{
+    text-align: start;
+    margin-bottom: 50px;
+}
+
+form input, textarea{
+    margin-top: 10px;
+}
+
+select{
+    padding: 50px;
+    color: white;
+}
+
+

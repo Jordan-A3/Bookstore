@@ -1,7 +1,13 @@
-import { combineReducers } from 'redux'
+import {combineReducers} from 'redux'
 
-import books from './books'
+import NewOne from './addBook'
+import getBooks from './getBooks'
+import upBooks from './updateBook'
+import handleAuth from './auth'
 
 export default combineReducers({
-    books
+    NewOne,
+    getBooks,
+    upBooks,
+    handleAuth
 })
