@@ -1,36 +1,43 @@
-import React from "react";
-
-import * as getBook from '../../actions/index'
-
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import React, { useState, useEffect } from "react";
 
 import './styles.css'
 import { useHistory } from "react-router-dom";
 
+import firebase from '../../firestore'
 
-const Catalog = (props, state) => {
+const Catalog = () => {
     const history = useHistory()
-    function getBooks(){
-            props.getBook()
-        }
+
+
+    const db = firebase.firestore()
+    const thisOne = db.collection("books")
+
+    const [books, setBooks] = useState([])
+
+    useEffect(() => {
+        thisOne.get().then(function(querySnapshot) {
+            const data = querySnapshot.docs.map(doc => doc.data())
+            setBooks(data)
+        })
+    },[])
+
+    
 
     function reservBook(livro){
         history.push('/reserva')
         localStorage.setItem('livro', livro)
     }
 
-    
-
-    const allBooks = props.books.getBooks
+    function AdmArea(){
+        history.push('/admArea')
+    }
 
     return(
-        <div className="profile-container" >
+        <div className="container-" >
             <header><h1>Escolha um livro</h1></header>
             
-            <button onClick={getBooks} >Ver Livros</button>
             <ul>
-                {allBooks.map(book => (
+                {books.map(book => (
                         <li key={book.id} > 
                             
                             <strong> Livro: </strong>
@@ -39,9 +46,6 @@ const Catalog = (props, state) => {
                             <span> {book.autor} </span>
                             <strong> Status: </strong>
                             <span> {book.disponibilidade} </span>
-                            <div className="sinopse" >   
-                                <p> {book.sinopse} </p>
-                            </div>
                             {book.disponibilidade === "Disponivel"
                                 ? <button onClick={() => reservBook(book.livro)} >Reservar</button>
                                 :(
@@ -51,15 +55,9 @@ const Catalog = (props, state) => {
                         </li>
                 ))}
             </ul>
+            <button id='admButton' onClick={AdmArea} >Sou um admnistrador</button>
         </div>
     )
 }
 
-const mapStateToProps = state => ({
-    books : state
-})
-
-const mapDispatchToProps = dispatch => 
-    bindActionCreators(getBook, dispatch)
-
-export default connect(mapStateToProps, mapDispatchToProps)(Catalog)
+export default Catalog

@@ -14,7 +14,7 @@ const Reserv = (props) => {
     function reserv(){
         props.updateBook(book, cardId)
         localStorage.clear()
-        history.push('/catalogo')
+        history.push('/')
     }
     return(
         <div className="container">
